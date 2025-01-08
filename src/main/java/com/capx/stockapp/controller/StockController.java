@@ -31,6 +31,9 @@ public class StockController {
 
     @GetMapping("/data/dashboard")
     public dashboardResponseModel getDashboardData() {
+        @Value("${rapidapi.key}")
+        String apiKey;
+        System.out.print("dbData"+apiKey);
         return stockService.getDashboardData();
     }
     
