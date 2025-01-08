@@ -45,8 +45,7 @@ public class StockService implements StockServiceInterface {
 	@Autowired
 	private  TransactionRepository transactionRepository;
 	
-	@Value("${rapidapi.key}")
-    private String apiKey;
+    	private String apiKey="9243680a8dmsh84925402eb5616dp1556a4jsncbf62aa16919";
 	
 	
 	public List<StockEntity> getAllStockEntities() {
