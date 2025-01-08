@@ -22,7 +22,7 @@ import com.capx.stockapp.services.impl.StockService;
 @CrossOrigin(origins = "*")  // Allows all origins
 public class StockController {
     
-    private final StockServiceInterface  stockService;
+    private final StockServiceInterface stockService;
 
     @Autowired
     public StockController(StockServiceInterface stockService) {
