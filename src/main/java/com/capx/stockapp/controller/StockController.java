@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.beans.factory.annotation.Value;
 
 import com.capx.stockapp.model.Stock;
 import com.capx.stockapp.model.StockEntity;
@@ -23,9 +22,6 @@ import com.capx.stockapp.services.impl.StockService;
 @CrossOrigin(origins = "*")  // Allows all origins
 public class StockController {
 
-    @Value("${rapidapi.key}")
-    private String apiKey;
-    
     private final StockServiceInterface stockService;
 
     @Autowired
@@ -35,7 +31,6 @@ public class StockController {
 
     @GetMapping("/data/dashboard")
     public dashboardResponseModel getDashboardData() {
-        System.out.print("dbData"+apiKey);
         return stockService.getDashboardData();
     }
     
