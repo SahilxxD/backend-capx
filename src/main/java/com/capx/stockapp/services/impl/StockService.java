@@ -60,36 +60,39 @@ public class StockService implements StockServiceInterface {
 	public dashboardResponseModel getDashboardData() {
 		
 		try {
-			List<StockEntity> dbData = new ArrayList<StockEntity>(); // Valid
-			dbData = getAllStockEntities(); // Valid assignment
-	        System.out.print("dbData"+dbData);
-	        
-	        if(dbData.isEmpty()) {
-	        	
-	        };
-	        
-	        // Join symbols from dbData
-	        String symbols = joinSymbols(dbData);
-	        String range = "3mo";  // 1 Day (you can adjust this as needed)
-	        String interval = "1d";  // 1-minute interval
-
-	        // Get data from Rapid API
-	        Map<String, Object> response = getRapidApiData(symbols, range, interval);
-
-	        // Log the response for debugging (you may want to remove this in production)
-	        
-
-	        // Combine portfolio returns
-	        Stock allStockCombine = getCombinePortfolioReturns(response, dbData);
-
-	        // Get the top stock
-	        Stock topStock = getTopStock(response, dbData);
-
-	        // Get industry performance data
-	        Map<String, Object> industryPerfromance = getIndustries(dbData);
-
-	        // Create dashboard response model
-	        dashboardResponseModel dashboardResponse = new dashboardResponseModel(topStock, allStockCombine, industryPerfromance);
+			//creating empty list of Stockentity
+			List<StockEntity> dbData = new ArrayList<StockEntity>();
+			//fetching all the stocks from portfolio database
+			dbData = getAllStockEntities();
+		        
+			//if there is no stocks present in portfolio
+		        if(dbData.isEmpty()) {
+		        	dashboardResponseModel dashboardResponse = new dashboardResponseModel();
+		        	return dashboardResponse;
+		        };
+		        
+		        // Join symbols from dbData
+		        String symbols = joinSymbols(dbData);
+		        String range = "3mo";  // 3 Months
+		        String interval = "1d";  // 1-day interval
+	
+		        // Get data from Rapid API
+		        Map<String, Object> response = getRapidApiData(symbols, range, interval);
+	
+		        // Log the response for debugging (you may want to remove this in production)
+		        
+	
+		        // Combine portfolio returns
+		        Stock allStockCombine = getCombinePortfolioReturns(response, dbData);
+	
+		        // Get the top stock
+		        Stock topStock = getTopStock(response, dbData);
+	
+		        // Get industry performance data
+		        Map<String, Object> industryPerfromance = getIndustries(dbData);
+	
+		        // Create dashboard response model
+		        dashboardResponseModel dashboardResponse = new dashboardResponseModel(topStock, allStockCombine, industryPerfromance);
 
 	        return dashboardResponse;
 
@@ -232,6 +235,10 @@ public class StockService implements StockServiceInterface {
 						System.out.println("Stock with symbol " + symbol + " has been deleted due to zero quantity.");
 						// Retrieve the updated stock list
 						stockList = getPortfolioData();
+						//set the quantity of existing stock to add transaction
+						existingStock.setQuantity(quantity);
+						//add in transactions
+						addTransaction(existingStock,action);
 						return stockList;  // Return the updated stock list or an empty list if an error occurred
 					}else {
 						int oldOrderPrice = existingStock.getQuantity() * existingStock.getAvgOrder();
@@ -255,7 +262,8 @@ public class StockService implements StockServiceInterface {
 				existingStock.setModifiedOn(LocalDateTime.now());
 				// Save the modified stock entity
 				stockRepository.save(existingStock);
-				
+				//change the quantiy to the request quantity
+				existingStock.setQuantity(quantity);
 				addTransaction(existingStock,action);
 
 			} else {
