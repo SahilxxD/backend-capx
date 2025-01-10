@@ -16,7 +16,10 @@ public class dashboardResponseModel {
 		this.allStocksCombine = allStocksCombine;
 		this.industryPerfromance = industryPerfromance;
 	}
-	
+
+	public dashboardResponseModel() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	public Map<String, Object> getIndustryPerfromance() {
 		return industryPerfromance;
