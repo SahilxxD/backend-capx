@@ -33,6 +33,12 @@ Ensure the following tools are installed:
 - [Maven](https://maven.apache.org/)
 - [MySQL/PostgreSQL](https://www.mysql.com/)
 
+## Setting Up Rapid Api for key
+- Visit [Rapidapi](https://rapidapi.com/apidojo/api/yahoo-finance1)
+- Create an account and subscribe to Yahoo-finance1.
+- Note down the Api X-RapidAPI-Key.
+- It has a limit of 500 req/Month
+
 ### Setup Steps
 1. Clone the repository:
    ```bash
@@ -48,10 +54,12 @@ Ensure the following tools are installed:
 3. Setup the environment variable RAPIDAPI_KEY
    
 4. Build and run the project
+    ```bash
     mvn clean install
     mvn spring-boot:run
+   ```
 
-5. Access the APIs:
+6. Access the APIs:
 
 Base URL: http://localhost:8080
 
