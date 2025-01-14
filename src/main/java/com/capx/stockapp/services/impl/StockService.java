@@ -165,7 +165,7 @@ public class StockService implements StockServiceInterface {
 	        // Save the new stock entity to the database
 	        stockRepository.save(newStock);
 	        
-	        addTransaction(newStock, "Buy");
+	        addTransaction(newStock, quantity, "Buy");
 
 	        // Retrieve and return the updated portfolio data
 	        stockList = getPortfolioData();
@@ -235,10 +235,9 @@ public class StockService implements StockServiceInterface {
 						System.out.println("Stock with symbol " + symbol + " has been deleted due to zero quantity.");
 						// Retrieve the updated stock list
 						stockList = getPortfolioData();
-						//set the quantity of existing stock to add transaction
-						existingStock.setQuantity(quantity);
+						
 						//add in transactions
-						addTransaction(existingStock,action);
+						addTransaction(existingStock,quantity,action);
 						return stockList;  // Return the updated stock list or an empty list if an error occurred
 					}else {
 						int oldOrderPrice = existingStock.getQuantity() * existingStock.getAvgOrder();
@@ -266,7 +265,7 @@ public class StockService implements StockServiceInterface {
 				
 				//change the quantiy to the request quantity
 				
-				addTransaction(existingStock,action);
+				addTransaction(existingStock, quantity, action);
 
 			} else {
 				throw new IllegalArgumentException("Stock with symbol " + symbol + " not found.");
@@ -289,7 +288,7 @@ public class StockService implements StockServiceInterface {
 		return stockList;  // Return the updated stock list or an empty list if an error occurred
 	}
 
-	private void addTransaction(StockEntity transaction, String action) {
+	private void addTransaction(StockEntity transaction, int qunatity, String action) {
 	    try {
 	        // Create a new TransactionEntity object
 	        TransactionEntity newTransaction = new TransactionEntity();
@@ -298,7 +297,7 @@ public class StockService implements StockServiceInterface {
 	        newTransaction.setIndustry(transaction.getIndustry());
 	        newTransaction.setName(transaction.getName());
 	        newTransaction.setPrice(transaction.getAvgOrder());
-	        newTransaction.setQuantity(transaction.getQuantity());
+	        newTransaction.setQuantity(qunatity);
 	        newTransaction.setDate(LocalDateTime.now());
 	        
 	        // Save the new transaction to the database
