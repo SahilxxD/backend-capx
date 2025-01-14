@@ -260,13 +260,12 @@ public class StockService implements StockServiceInterface {
 
 				// Optionally, set the modified date/time
 				existingStock.setModifiedOn(LocalDateTime.now());
-				System.err.println("Quantity before saving: " + existingStock.getQuantity();
+				
 				// Save the modified stock entity
 				stockRepository.save(existingStock);
-				System.err.println("Quantity after saving: " + existingStock.getQuantity();
+				
 				//change the quantiy to the request quantity
-				existingStock.setQuantity(quantity);
-				System.err.println("Quantity after changing: " + existingStock.getQuantity();
+				
 				addTransaction(existingStock,action);
 
 			} else {
