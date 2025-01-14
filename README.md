@@ -65,7 +65,7 @@ Base URL: http://localhost:8080
 
 
 ## Folder Structure
-
+```
 capx-backend/
 ├── src/
 │   ├── main/
@@ -93,4 +93,4 @@ capx-backend/
 └── README.md                                # Project documentation
 
 
-
+```
